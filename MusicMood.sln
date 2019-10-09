@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicMood", "MusicMood\MusicMood.csproj", "{12011FC2-52A9-4D3B-B498-20567A619FB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryServices", "LibraryServices\LibraryServices.csproj", "{3E009135-6E14-4E3E-A01E-29F445078BBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12011FC2-52A9-4D3B-B498-20567A619FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12011FC2-52A9-4D3B-B498-20567A619FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12011FC2-52A9-4D3B-B498-20567A619FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12011FC2-52A9-4D3B-B498-20567A619FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E009135-6E14-4E3E-A01E-29F445078BBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E009135-6E14-4E3E-A01E-29F445078BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E009135-6E14-4E3E-A01E-29F445078BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E009135-6E14-4E3E-A01E-29F445078BBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC083901-92A9-4271-BDA5-73302C2DF80C}
+	EndGlobalSection
+EndGlobal
