@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic.cs" />
     <Compile Include="DbService.cs" />
     <Compile Include="MusicContext.cs" />
     <Compile Include="MusicContextInitializer.cs" />

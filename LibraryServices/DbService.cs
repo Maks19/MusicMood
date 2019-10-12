@@ -10,7 +10,7 @@ namespace LibraryServices
     public class DbService
     {
         public static void CreatePerson
-        (string firstName, string secondName,string login, string email, string password,DateTime dateOfBirth)
+        (string firstName, string secondName, string login, string email, string password, DateTime dateOfBirth)
         {
             Person person = new Person()
             {
@@ -27,7 +27,26 @@ namespace LibraryServices
                 ctx.SaveChanges();
             }
         }
-        public static bool PersonEmailExists(string email)
+
+        public static void UpdatePassword(Person user) {
+
+            using (var ctx = new MusicContext("MusicContext"))
+
+            {
+                ctx.Persons.Attach(user);
+                var entry = ctx.Entry(user);
+                entry.Property(x => x.Password).IsModified = true;
+                try
+                {
+                    ctx.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception();
+                }
+            }
+        }
+        public static Person PersonEmailExists(string email)
         {
             Person person;
             using (var ctx = new MusicContext("MusicContext"))
@@ -35,12 +54,9 @@ namespace LibraryServices
                 person = ctx.Persons.FirstOrDefault(p => p.Email == email);
             }
 
-            if (person == null)
-                return false;
-            else
-                return true;
+            return person;
         }
-        public static bool PersonLoginExists(string login)
+        public static Person PersonLoginExists(string login)
         {
             Person person;
             using (var ctx = new MusicContext("MusicContext"))
@@ -48,12 +64,9 @@ namespace LibraryServices
                 person = ctx.Persons.FirstOrDefault(p => p.Login == login);
             }
 
-            if (person == null)
-                return false;
-            else
-                return true;
+            return person;
         }
-        public static bool AutorizeConfirm(string login,string password)
+        public static Person AutorizeConfirm(string login, string password)
         {
             Person person;
 
@@ -62,10 +75,7 @@ namespace LibraryServices
                 person = ctx.Persons.FirstOrDefault(p => p.Login == login);
             }
 
-            if (person != null && person?.Password == password)
-                return true;
-            else
-                return false;
+            return (person != null && person?.Password == password) ? person : null;
 
         }
     }
