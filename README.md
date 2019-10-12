@@ -1,2 +1,2 @@
-# notes:MusicMood
+# :notes:MusicMood
 Application for listening music
