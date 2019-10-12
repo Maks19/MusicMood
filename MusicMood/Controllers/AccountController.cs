@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using MusicMood.Models;
+using System.Text.RegularExpressions;
 
 namespace MusicMood.Controllers
 {
@@ -19,14 +20,27 @@ namespace MusicMood.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel registerModel)
         {
-            if (DbService.PersonEmailExists(registerModel.Email))
+
+            if (registerModel.Email != null && Regex.IsMatch(registerModel.Email, "[a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+"))
             {
-                ModelState.AddModelError(nameof(registerModel.Email), "this email is existed in system");
+                if (DbService.PersonEmailExists(registerModel.Email) != null)
+                {
+                    ModelState.AddModelError(nameof(registerModel.Email), "this email is existed in system");
+                }
+
+            }
+            else {
+                ModelState.AddModelError(nameof(registerModel.Email), "Email is not valid");
             }
 
-            if (DbService.PersonLoginExists(registerModel.Login))
-            {
-                ModelState.AddModelError(nameof(registerModel.Login), "this login is existed in system");
+            if (registerModel.Login != null && Regex.IsMatch(registerModel.Login, "[a-zA-Z0-9_\\.]+")) {
+                if (DbService.PersonLoginExists(registerModel.Login) != null)
+                {
+                    ModelState.AddModelError(nameof(registerModel.Login), "this login is existed in system");
+                }
+            }
+            else {
+                ModelState.AddModelError(nameof(registerModel.Login), "Login is not valid");
             }
 
             if (!(registerModel.DateOfBirth > DateTime.Now.AddYears(-120) 
@@ -39,7 +53,7 @@ namespace MusicMood.Controllers
             {
                 FormsAuthentication.SetAuthCookie(registerModel.Login,true);
                 DbService.CreatePerson(registerModel.FirstName,registerModel.SecondName,registerModel.Login,
-                    registerModel.Email,registerModel.Password,registerModel.DateOfBirth);
+                    registerModel.Email,BusinessLogic.CryptographyMD5(registerModel.Password),registerModel.DateOfBirth);
                 return RedirectToAction("Index","Home");
             }
             else
@@ -48,6 +62,34 @@ namespace MusicMood.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult Recovery() {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Recovery(FormCollection formCollection)
+        {
+            var user = DbService.PersonLoginExists(formCollection["Login"]);
+          
+            if (user != null)
+            {
+                user.Password = BusinessLogic.GenerateStrongPassword();
+                BusinessLogic.Notify(user);
+                user.Password = BusinessLogic.CryptographyMD5(user.Password);
+                DbService.UpdatePassword(user);
+              
+                ViewBag.Msg = "Пароль успешно обновлен!Проверьте свою почту";
+                
+                
+            }
+            else {
+                ViewBag.Msg = "Пользователя с таким логином не сущетствует!";
+            }
+            return View();
+
+        }
+
+        [HttpGet]
         public ActionResult Authorize()
         {
             return View();
@@ -56,7 +98,7 @@ namespace MusicMood.Controllers
         [HttpPost]
         public ActionResult Authorize(AuthorizeModel model)
         {
-            if (!DbService.AutorizeConfirm(model.Login,model.Password))
+            if (DbService.AutorizeConfirm(model.Login, BusinessLogic.CryptographyMD5(model.Password)) == null)
             {
                 ModelState.AddModelError("Confirm", "Email или пароль не совпадают");
             }

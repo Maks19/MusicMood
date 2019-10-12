@@ -12,7 +12,7 @@ namespace LibraryServices
     {
         protected override void Seed(MusicContext context)
         {
-            List<Role> roles = new List<Role>()
+            var roles = new List<Role>()
             {
                 new Role(){Id = 1, Name = "Admin"},
                 new Role(){Id = 2,Name = "User"}

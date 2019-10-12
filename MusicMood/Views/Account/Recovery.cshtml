@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = null;
+}
+
+    
+    <div>
+        <h1>Забыли пароль?</h1>
+        <p>
+            Пожалуйста, введите логин, с помощью которого Вы заходите на сайт.
+            На указанный при регистрации адрес электронной почты будет выслано письмо со ссылкой для сброса пароля.
+        </p>
+        <p>@ViewBag.msg</p>
+        <div class="form-horizontal">
+            @using (Html.BeginForm()) {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.TextBox("Login", null, new { required = true, placeholder = "example@com", id = "text1", minlength = "5" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Send" class="btn btn-default" />
+                </div>
+            </div>
+            }
+
+        </div>
+    </div>

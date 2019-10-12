@@ -25,7 +25,6 @@ namespace MusicMood.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
         [Required]
-        [RegularExpression("[a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+")]
         public string Email { get; set; }
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
