@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using MusicMood.Models;
 using System.Text.RegularExpressions;
+using System.Web.Helpers;
 
 namespace MusicMood.Controllers
 {
@@ -21,9 +22,9 @@ namespace MusicMood.Controllers
         public ActionResult Register(RegisterModel registerModel)
         {
 
-            if (registerModel.Email != null && Regex.IsMatch(registerModel.Email, "[a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+"))
+            if (registerModel.Email != null && Regex.IsMatch(registerModel.Email, "^[a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+$"))
             {
-                if (DbService.PersonEmailExists(registerModel.Email) != null)
+                if (DbService.GetPersonByEmail(registerModel.Email) != null)
                 {
                     ModelState.AddModelError(nameof(registerModel.Email), "this email is existed in system");
                 }
@@ -33,8 +34,8 @@ namespace MusicMood.Controllers
                 ModelState.AddModelError(nameof(registerModel.Email), "Email is not valid");
             }
 
-            if (registerModel.Login != null && Regex.IsMatch(registerModel.Login, "[a-zA-Z0-9_\\.]+")) {
-                if (DbService.PersonLoginExists(registerModel.Login) != null)
+            if (registerModel.Login != null && Regex.IsMatch(registerModel.Login, "^[a-zA-Z0-9_\\.]+$")) {
+                if (DbService.GetPersonByLogin(registerModel.Login) != null)
                 {
                     ModelState.AddModelError(nameof(registerModel.Login), "this login is existed in system");
                 }
@@ -69,14 +70,14 @@ namespace MusicMood.Controllers
         [HttpPost]
         public ActionResult Recovery(FormCollection formCollection)
         {
-            var user = DbService.PersonLoginExists(formCollection["Login"]);
+            var user = DbService.GetPersonByLogin(formCollection["Login"]);
           
             if (user != null)
             {
-                user.Password = BusinessLogic.GenerateStrongPassword();
-                BusinessLogic.Notify(user);
-                user.Password = BusinessLogic.CryptographyMD5(user.Password);
-                DbService.UpdatePassword(user);
+                string password = BusinessLogic.GenerateStrongPassword();
+                BusinessLogic.Notify(user,password);
+                string cryptoPassword = BusinessLogic.CryptographyMD5(user.Password);
+                DbService.UpdatePassword(user.Id, cryptoPassword);
               
                 ViewBag.Msg = "Пароль успешно обновлен!Проверьте свою почту";
                 
@@ -100,7 +101,7 @@ namespace MusicMood.Controllers
         {
             if (DbService.AutorizeConfirm(model.Login, BusinessLogic.CryptographyMD5(model.Password)) == null)
             {
-                ModelState.AddModelError("Confirm", "Email или пароль не совпадают");
+                ModelState.AddModelError("Confirm", "Логин или пароль не совпадают");
             }
 
             if (ModelState.IsValid)
