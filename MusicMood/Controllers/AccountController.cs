@@ -50,6 +50,11 @@ namespace MusicMood.Controllers
                 ModelState.AddModelError(nameof(registerModel.DateOfBirth), "incorrect Date of Birth");
             }
 
+            if (registerModel.Password != registerModel.ConfirmPassword)
+            {
+                ModelState.AddModelError(nameof(registerModel.ConfirmPassword), "Пароли не совпадают");
+            }
+
             if (ModelState.IsValid)
             {
                 FormsAuthentication.SetAuthCookie(registerModel.Login,true);

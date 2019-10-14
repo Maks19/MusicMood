@@ -314,3 +314,5 @@ C:\Users\Саша\Desktop\Reserve1\MusicMood\obj\Debug\MusicMood.csprojAssemblyR
 C:\Users\Саша\Desktop\Reserve1\MusicMood\obj\Debug\MusicMood.csproj.CopyComplete
 C:\Users\Саша\Desktop\Reserve1\MusicMood\obj\Debug\MusicMood.dll
 C:\Users\Саша\Desktop\Reserve1\MusicMood\obj\Debug\MusicMood.pdb
+C:\Users\Саша\Desktop\Reserve1\MusicMood\bin\System.Web.Providers.dll
+C:\Users\Саша\Desktop\Reserve1\MusicMood\bin\System.Web.Providers.xml

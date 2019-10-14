@@ -20,7 +20,8 @@ namespace LibraryServices
                 Email = email,
                 Password = password,
                 Login = login,
-                DateOfBirth = dateOfBirth
+                DateOfBirth = dateOfBirth,
+                RoleId = 2
             };
             using (var ctx = new MusicContext("MusicContext"))
             {
@@ -85,6 +86,19 @@ namespace LibraryServices
 
             return (person != null && person?.Password == password) ? person : null;
 
+        }
+
+        public static string[] GetUserRoles(string login)
+        {
+            string[] roles = new string[1];
+
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                string role = ctx.Roles.FirstOrDefault(rol => rol.Id == ctx.Persons.FirstOrDefault(p => p.Login == login).RoleId)?.Name;
+                roles[0] = role;
+            }
+
+            return roles;
         }
     }
 }

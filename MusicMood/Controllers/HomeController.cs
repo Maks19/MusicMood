@@ -6,16 +6,22 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Providers.Entities;
 using System.Web.Security;
 using MusicMood.Models;
 
 namespace MusicMood.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
+            if (User.IsInRole("admin"))
+            {
+                return RedirectToAction("AdminPage");
+            }
+
             return View();
         }
 
@@ -30,12 +36,14 @@ namespace MusicMood.Controllers
             return RedirectToAction("Authorize", "Account");
         }
 
+        [Authorize(Roles = "user")]
         public ActionResult Setting()
         {
             Person person = DbService.GetPersonByLogin(HttpContext.User.Identity.Name);
             return View(person);
         }
 
+        [Authorize(Roles = "user")]
         [HttpPost]
         public ActionResult Setting(FormCollection formResult)
         {
@@ -124,6 +132,12 @@ namespace MusicMood.Controllers
                 }
                 return View(currentPerson);
             }
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult AdminPage()
+        {
+            return View();
         }
     }
 }

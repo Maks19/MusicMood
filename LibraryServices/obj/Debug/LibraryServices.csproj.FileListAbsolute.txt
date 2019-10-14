@@ -46,3 +46,5 @@ C:\Users\Саша\Desktop\Reserve1\LibraryServices\obj\Debug\LibraryServices.csp
 C:\Users\Саша\Desktop\Reserve1\LibraryServices\obj\Debug\LibraryServices.csproj.CopyComplete
 C:\Users\Саша\Desktop\Reserve1\LibraryServices\obj\Debug\LibraryServices.dll
 C:\Users\Саша\Desktop\Reserve1\LibraryServices\obj\Debug\LibraryServices.pdb
+C:\Users\Саша\Desktop\Reserve1\LibraryServices\bin\Debug\System.Web.Providers.dll
+C:\Users\Саша\Desktop\Reserve1\LibraryServices\bin\Debug\System.Web.Providers.xml
