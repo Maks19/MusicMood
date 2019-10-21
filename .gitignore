@@ -1,1 +1,3 @@
-*/.vs
+*.vs
+MusicMood/obj
+MusicMood/bin
