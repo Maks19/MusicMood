@@ -190,6 +190,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Style\AuthorizeStyle.css" />
     <Content Include="Style\LayoutStyle.css" />
+    <Content Include="Style\RegisterStyle.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
