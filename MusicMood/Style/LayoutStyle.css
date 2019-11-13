@@ -1,0 +1,35 @@
+﻿.row {
+    margin: 5px;
+    display: flex;
+}
+
+li {
+    list-style-type: none;
+    margin-left: 1vw;
+}
+
+    li:first-child {
+        margin: 0;
+    }
+
+.content {
+    height: 50vh;
+    background-color: lightgray;
+}
+
+.copyright, .impressum {
+    text-align: center;
+}
+
+.logo {
+    height: 8vh;
+}
+
+li {
+    margin-left: 0;
+    margin-bottom: 1vh;
+}
+
+.sozial {
+    margin-bottom: 1vh;
+}
