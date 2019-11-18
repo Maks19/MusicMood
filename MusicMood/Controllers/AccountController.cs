@@ -52,7 +52,7 @@ namespace MusicMood.Controllers
 
             if (registerModel.Password != registerModel.ConfirmPassword)
             {
-                ModelState.AddModelError(nameof(registerModel.ConfirmPassword), "Пароли не совпадают");
+                ModelState.AddModelError(nameof(registerModel.ConfirmPassword), "Passwords dont match");
             }
 
             if (ModelState.IsValid)

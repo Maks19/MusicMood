@@ -19,7 +19,7 @@ namespace MusicMood.Controllers
         {
             if (User.IsInRole("admin"))
             {
-                return RedirectToAction("AdminPage");
+                return RedirectToAction("Upload","Admin");
             }
 
             return View();

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
+using System.IO;
+
 
 namespace LibraryServices
 {
@@ -24,7 +27,6 @@ namespace LibraryServices
             
             return strb.ToString();
         }
-        
 
         public static void Notify(Person user, string newPassword) {
            var addresser = new MailAddress("alex.23.kovalov@gmail.com", "MusicMood");
@@ -44,6 +46,14 @@ namespace LibraryServices
             }
             
         }
+
+        public static void SaveInRootFolder(HttpPostedFileBase fileObj, string fileDirect) {
+            string path = HttpContext.Current.Server.MapPath($"~/App_Data/{fileDirect}");
+            string fileName = Path.GetFileName(fileObj.FileName);
+            string fullPath = Path.Combine(path, fileName);
+            fileObj.SaveAs(fullPath);
+
+        }
         public static string GenerateStrongPassword() {
             const string setchars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@^_`.?!";
             StringBuilder strb =  new StringBuilder();
@@ -56,5 +66,12 @@ namespace LibraryServices
             
             return strb.ToString();
         }
+        private enum Geners { Ambient, Classical, Country, DeepHouse, Disco, Dubstep, Jazz };
+
+        public static string[] FetchAllGeners() {
+            return Enum.GetNames(typeof(Geners));
+        }
+
+
     }
 }

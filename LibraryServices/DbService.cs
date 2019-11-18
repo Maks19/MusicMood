@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace LibraryServices
 {
@@ -29,6 +30,26 @@ namespace LibraryServices
                 ctx.SaveChanges();
             }
         }
+        public static void CreateSound(string title, string album, string artist, string color, string description, string musicName, string imgName)
+        {
+            Sound sound = new Sound()
+            {
+                Title = title,
+                Album = album,
+                Artist = artist,
+                Color = color,
+                Description = description,
+                MusicName = musicName,
+                ImgName = imgName
+            };
+
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                ctx.Sounds.Add(sound);
+                ctx.SaveChanges();
+            }
+
+        }
 
         public static void UpdatePersonData(int id, string login, string firstName, string secondName)
         {
@@ -44,7 +65,8 @@ namespace LibraryServices
             }
         }
 
-        public static void UpdatePassword(int personId, string password) {
+        public static void UpdatePassword(int personId, string password)
+        {
 
             using (var ctx = new MusicContext("MusicContext"))
 
@@ -55,6 +77,8 @@ namespace LibraryServices
                 ctx.SaveChanges();
             }
         }
+
+
         public static Person GetPersonByEmail(string email)
         {
             Person person;
@@ -74,6 +98,34 @@ namespace LibraryServices
             }
 
             return person;
+        }
+        public static Sound GetSoundByMusicFileName(string musicName)
+        {
+            Sound sound;
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                sound = ctx.Sounds.FirstOrDefault(s => s.MusicName == musicName);
+
+            }
+            return sound;
+
+
+        }
+        public static Sound GetSoundByName(string soundname)
+        {
+
+            Sound sound;
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+
+                sound = ctx.Sounds.FirstOrDefault(s => s.Title == soundname);
+            }
+            return sound;
+        }
+        public static IEnumerable<Sound> FetchAllMusic()
+        {
+            return null;
+
         }
         public static Person AutorizeConfirm(string login, string password)
         {

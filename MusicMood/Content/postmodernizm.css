@@ -1,0 +1,12 @@
+﻿.dot {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    margin-top: 10px;
+    display: inline-block;
+}
+#img-sound {
+    height: 200px;
+    width: 200px;
+    margin-top:50px;
+}
