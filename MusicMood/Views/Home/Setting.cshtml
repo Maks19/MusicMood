@@ -1,0 +1,57 @@
+﻿@using LibraryServices
+@using MusicMood.Models
+@model LibraryServices.Person
+
+@{
+    ViewBag.Title = "Setting";
+}
+
+@using (@Html.BeginForm("Setting", "Home", FormMethod.Post))
+{
+    <h2>Обновление персональных данных</h2>
+    <div>
+        @Html.LabelFor(m => m.FirstName)
+        @Html.EditorFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.FirstName)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.SecondName)
+        @Html.EditorFor(m => m.SecondName)
+        @Html.ValidationMessageFor(m => m.SecondName)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Login)
+        @Html.EditorFor(m => m.Login)
+        @Html.ValidationMessageFor(m => m.Login)
+    </div>
+
+    <span>@ViewData["PersonErrorMessage"]</span>
+    <span>@ViewData["PersonConfirmedMessage"]</span>
+
+    <input type="submit" value="Обновить" />
+
+}
+
+@using (@Html.BeginForm("Setting", "Home", FormMethod.Post))
+{
+    <h2>Изменение пароля</h2>
+    <div>
+        @Html.Label("OldPassword","Текущий пароль")
+        <input type="password" name="OldPassword" id="OldPassword" />
+        @Html.ValidationMessage("OldPassword")
+    </div>
+    <div>
+        @Html.Label("NewPassword","Новый пароль")
+        <input type="password" name="NewPassword" id="NewPassword" />
+        @Html.ValidationMessage("NewPassword")
+    </div>
+    <div>
+        @Html.Label("NewConfirmedPassword","Подтверждение пароля")
+        <input type="password" name="NewConfirmedPassword" id="NewConfirmedPassword"/>
+        @Html.ValidationMessage("NewConfirmedPassword")
+    </div>
+          <span>@ViewData["PasswordErrorMessage"]</span>
+          <span>@ViewData["PasswordConfirmedMessage"]</span>
+    <input type="submit" value="Изменить" />
+
+}

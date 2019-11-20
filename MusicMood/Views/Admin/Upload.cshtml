@@ -1,0 +1,94 @@
+﻿@model MusicMood.Models.UploadModel
+
+@{
+    ViewBag.Title = "Upload";
+    ViewBag.Geners= new SelectList( new String[] { "Ambient", "Classical", "Country", "DeepHouse", "Disco"," Dubstep", "Jazz"});
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@using (Html.BeginForm("Upload", "Admin", FormMethod.Post, new
+    {
+        enctype = "multipart/form-data"
+    })){ 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <img id="img-sound" style="background-color:#787878" class="img-rounded" />
+            @Html.TextBoxFor(model => model.SoundImg,null, new { type="file", id="img-upload", name="Img" , onchange="ImgPreview(this)"})
+            @Html.ValidationMessageFor(model => model.SoundImg, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-3">
+
+            <div>
+                <label>Title</label>
+                @Html.TextBoxFor(model => model.Title, null, new { @class = "col-5 form-control" })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div>
+                <label>Gener</label>
+                @Html.DropDownListFor(model => model.Gener, (SelectList)ViewBag.Geners, new { @class = "col-5 form-control" })
+                @Html.ValidationMessageFor(model => model.Gener, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div>
+                <label>Artist</label>
+                @Html.TextBoxFor(model => model.Artist, null, new { @class = "col-5 form-control" })
+                @Html.ValidationMessageFor(model => model.Artist, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                <label>Album</label>
+                @Html.TextBoxFor(model => model.Album, null, new { @class = "col-5 form-control" })
+                @Html.ValidationMessageFor(model => model.Album, "", new { @class = "text-danger" })
+            </div>
+
+            <div>
+                <label>Color</label>
+                @Html.HiddenFor(model => model.Color, new { @class = "col-5 form-control", id = "color-val" })
+                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                <div class="card">
+                    <div class="row">
+                        <div class="dot" style="background-color:#000000"></div>
+                        <div class="dot" style="background-color:#808080"></div>
+                        <div class="dot" style="background-color:#fffff0"></div>
+                    </div>
+                    <div class="row">
+                        <div class="dot" style="background-color:#ff0000"></div>
+                        <div class="dot" style="background-color:#00ff21"></div>
+                        <div class="dot" style="background-color:#4800ff"></div>
+                    </div>
+                    <div class="row">
+                        <div class="dot" style="background-color:#ffd800"></div>
+                        <div class="dot" style="background-color:#b200ff"></div>
+                        <div class="dot" style="background-color:#ff6a00"></div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+            <div>
+                <label>Description</label>
+                <div class="row">
+                    @Html.TextAreaFor(model => model.Description, new { id = "dsecription-sound", @class = "col-5 form-control" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div>
+                <label>Upload file</label>
+                @Html.TextBoxFor(model => model.SoundObj, null, new { type = "file" })
+                @Html.ValidationMessageFor(model => model.SoundObj, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Добавить песню" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/postmodernizm.js"></script>
+<script src="~/Scripts/helpjs.js"></script>
