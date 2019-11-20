@@ -1,7 +1,6 @@
 ﻿.article {
     display: flex;
     flex-direction: column;
-    font-size: 20px;
     align-items: center;
 }
 
