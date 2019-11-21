@@ -1,73 +1,7 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+﻿
+@{
+    ViewBag.Title = "_Layout";
+}
 
-    @Styles.Render("~/Style/LayoutStyle.css")
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body style="padding: 0">
-    <div>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <img width="100px" height="50px" src="https://static.rfstat.com/renderforest/images/v2/logos/renderforest-logo2.jpg" />
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav" style="flex-direction: row">
-                        <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Информация", "About", "Home")</li>
-                        <li>@Html.ActionLink("Связаться", "Contact", "Home")</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        @RenderBody()
-        <div class="navbar-fixed-bottom">
-            <hr />
-            <div class="navbar navbar-inverse navbar-fixed-bottom">
-                <div class="container">
-                            <ul style="
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-">
-                                <li>
-                                    <a href="#">
-                                        <img class="logo" src="https://cdn2.iconfinder.com/data/icons/black-white-social-media/32/online_social_media_facebook-128.png">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img class="logo" src="https://cdn2.iconfinder.com/data/icons/black-white-social-media/32/twitter_online_social_media-128.png">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img class="logo" src="https://cdn2.iconfinder.com/data/icons/black-white-social-media/32/instagram_online_social_media_photo-128.png">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img class="logo" src="https://cdn2.iconfinder.com/data/icons/black-white-social-media/32/online_social_media_google_plus-128.png">
-                                    </a>
-                                </li>
-                            </ul>
-                     
-                </div>
-            </div>
-        </div>
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-</body>
-</html>
+<h2>_Layout</h2>
+

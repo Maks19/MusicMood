@@ -72,13 +72,16 @@ namespace MusicMood.Controllers
 
                 }
             }
-            
+
 
             if (ModelState.IsValid)
             {
                 BusinessLogic.SaveInRootFolder(model.SoundObj, "MusicStorage");
-                BusinessLogic.SaveInRootFolder(model.SoundImg, "SoundImg");
-                DbService.CreateSound(model.Title, model.Album, model.Artist, model.Color, model.Description, model.SoundObj.FileName, model.SoundImg.FileName);
+                if (model.SoundImg != null)
+                {
+                    BusinessLogic.SaveInRootFolder(model.SoundImg, "SoundImg");
+                }
+                DbService.CreateSound(model.Title, model.Album, model.Artist, model.Color, model.Description, model.SoundObj.FileName, model.SoundImg?.FileName ?? "default-release.png");
                 return RedirectToAction("Index");
             }
             else
@@ -86,8 +89,114 @@ namespace MusicMood.Controllers
                 return View();
             }
 
-
         }
 
+        public ActionResult PlayListCreating()
+        {
+            List<Sound> sounds = DbService.FetchAllMusic();
+
+            IEnumerable<SelectListItem> soundSelector =
+                sounds.Select( 
+                    s=>new SelectListItem()
+                    {
+                        Text = s.MusicName,
+                        Value = s.Id.ToString()
+                    });
+            ViewData["Sounds"] = soundSelector;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PlayListCreating(PlayList playList)
+        {
+            if (playList.Name == null)
+            {
+                ModelState.AddModelError(nameof(playList.Name), "Поле 'Название' не заполненно");
+            }
+
+            if(playList.Color == null)
+            {
+                ModelState.AddModelError(nameof(playList.Color), "Цвет не выбран");
+            }
+
+            HttpCookie soundsCookie = ControllerContext.HttpContext.Request.Cookies["sounds"];
+            SortedSet<Sound> sounds = new SortedSet<Sound>();
+
+            if (soundsCookie != null)
+            {
+                string[] soundsId = soundsCookie.Value.Split(',');
+
+                for (int i = 0; i < soundsId.Length; i++)
+                {
+                    sounds.Add(DbService.GetSoundById(Convert.ToInt32(soundsId[i])));
+                }
+
+                if (sounds.Count < 2)
+                {
+                    ModelState.AddModelError("Sounds-Error", "Добавьте хотябы 2 песни");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Sounds-Error", "Добавьте песни");
+            }
+
+            if (ModelState.IsValid)
+            {
+                DbService.CreatePlayList(playList.Name,playList.Color);
+                PlayList lastPlayList = DbService.GetPalyListWithMaxId();
+                foreach (Sound sound in sounds)
+                {
+                    DbService.CreatePlayListSound(sound.Id,lastPlayList.Id);
+                }
+                soundsCookie.Expires = DateTime.Now.AddDays(-1);
+                HttpContext.Response.Cookies.Add(soundsCookie);
+                return RedirectToAction("Index");
+            }
+
+            List<Sound> sounds1 = DbService.FetchAllMusic();
+
+            IEnumerable<SelectListItem> soundSelector =
+                sounds1.Select(
+                    s => new SelectListItem()
+                    {
+                        Text = s.MusicName,
+                        Value = s.Id.ToString()
+                    });
+            ViewData["Sounds"] = soundSelector;
+
+            return View();
+        }
+
+        public ActionResult PartialSounds(string soundId)
+        {
+            Thread.Sleep(2000);
+
+            HttpCookie soundsCookie = ControllerContext.HttpContext.Request.Cookies["sounds"];
+            SortedSet<Sound> sounds = new SortedSet<Sound>();
+
+            if (Request.Cookies["sounds"] == null)
+            {
+                soundsCookie = new HttpCookie("sounds");
+                soundsCookie.Value = soundId;
+                sounds.Add(DbService.GetSoundById(Convert.ToInt32(soundId)));
+            }
+            else
+            {
+                string[] valArray = soundsCookie.Value.Split(',');
+                soundsCookie.Value += $",{soundId}";
+
+                foreach (string val in valArray)
+                {
+                    sounds.Add(DbService.GetSoundById(Convert.ToInt32(val)));
+                }
+                sounds.Add(DbService.GetSoundById(Convert.ToInt32(soundId)));
+            }
+
+            HttpContext.Response.Cookies.Add(soundsCookie);
+
+            return View(sounds);
+        }
     }
 }

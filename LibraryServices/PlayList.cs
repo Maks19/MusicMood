@@ -11,6 +11,8 @@ namespace LibraryServices
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Название")]
+        [StringLength(15, MinimumLength = 3,ErrorMessage ="Название может содержать от 3х до 15ти символов")]
         public string Name { get; set; }
         public string Color { get; set; }
         public DateTime AddingDate { get; set; }

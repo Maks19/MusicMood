@@ -6,7 +6,7 @@ $(".dot").click(function () {
         return parseInt(val, 10).toString(16);
     });
     color = "#" + rgb.join("");
-    $("#color-val").val(color);
+    $(".color-val").val(color);
 });
 
 
