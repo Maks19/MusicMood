@@ -1,0 +1,23 @@
+﻿@using LibraryServices
+@model IEnumerable<LibraryServices.Sound>
+
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Sounds</h2>
+@foreach (Sound sound in Model)
+{
+<div class="row">
+    <div class="col-3">
+        @sound.Title
+    </div>
+    <div class="col-3">
+        @sound.MusicName
+    </div>
+    <div class="col-3">
+        @sound.Artist
+    </div>
+</div>
+}

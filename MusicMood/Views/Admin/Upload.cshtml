@@ -47,7 +47,7 @@
 
             <div>
                 <label>Color</label>
-                @Html.HiddenFor(model => model.Color, new { @class = "col-5 form-control", id = "color-val" })
+                @Html.HiddenFor(model => model.Color, new { @class = "col-5 form-control color-val"})
                 @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
                 <div class="card">
                     <div class="row">
@@ -89,6 +89,3 @@
         </div>
     </div>
 }
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Scripts/postmodernizm.js"></script>
-<script src="~/Scripts/helpjs.js"></script>

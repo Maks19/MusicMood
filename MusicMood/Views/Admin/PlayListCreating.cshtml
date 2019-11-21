@@ -1,0 +1,63 @@
+﻿@model LibraryServices.PlayList
+
+@{
+    ViewBag.Title = "PlayListCreating";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Создание плей-листов</h2>
+
+<div>
+    @using (Ajax.BeginForm("PartialSounds", new AjaxOptions { LoadingElementDuration = 1000, UpdateTargetId = "sounds-block" }))
+    {
+        @Html.Label("SoundId", "Добавить песню")
+        @Html.DropDownList("SoundId", ViewData["Sounds"] as IEnumerable<SelectListItem>)
+        <input type="submit" value="добавить">
+    }
+</div>
+
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.LabelFor(m => m.Name, "Название")
+        @Html.TextBoxFor(m => m.Name)
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div>
+        <label>Color</label>
+        @Html.HiddenFor(model => model.Color, new { @class = "col-5 form-control color-val" })
+        @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+        <div class="card">
+            <div class="row">
+                <div class="dot" style="background-color:#000000"></div>
+                <div class="dot" style="background-color:#808080"></div>
+                <div class="dot" style="background-color:#fffff0"></div>
+            </div>
+            <div class="row">
+                <div class="dot" style="background-color:#ff0000"></div>
+                <div class="dot" style="background-color:#00ff21"></div>
+                <div class="dot" style="background-color:#4800ff"></div>
+            </div>
+            <div class="row">
+                <div class="dot" style="background-color:#ffd800"></div>
+                <div class="dot" style="background-color:#b200ff"></div>
+                <div class="dot" style="background-color:#ff6a00"></div>
+            </div>
+        </div>
+    </div>
+
+    @Html.ValidationMessage("Sounds-Error");
+    <input type="submit" value="Подтвердить" />
+}
+
+
+<div id="sounds-block">
+
+</div>
+
+<script>
+    function aaa() {
+        alert("asdasdsad");
+    }
+</script>

@@ -107,9 +107,8 @@ namespace LibraryServices
                 sound = ctx.Sounds.FirstOrDefault(s => s.MusicName == musicName);
 
             }
+
             return sound;
-
-
         }
         public static Sound GetSoundByName(string soundname)
         {
@@ -122,10 +121,28 @@ namespace LibraryServices
             }
             return sound;
         }
-        public static IEnumerable<Sound> FetchAllMusic()
-        {
-            return null;
 
+        public static Sound GetSoundById(int id)
+        {
+
+            Sound sound;
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+
+                sound = ctx.Sounds.FirstOrDefault(s => s.Id == id);
+            }
+            return sound;
+        }
+        public static List<Sound> FetchAllMusic()
+        {
+            List<Sound> sounds;
+
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                sounds = ctx.Sounds.Include(s => s.PersonSounds).Include(s => s.PlayListSound).ToList();
+            }
+
+            return sounds;
         }
         public static Person AutorizeConfirm(string login, string password)
         {
@@ -151,6 +168,48 @@ namespace LibraryServices
             }
 
             return roles;
+        }
+
+        public static void CreatePlayList(string name, string color)
+        {
+            PlayList playList = new PlayList()
+            {
+                Name = name,
+                Color = color,
+                AddingDate = DateTime.Now
+            };
+
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                ctx.PlayLists.Add(playList);
+                ctx.SaveChanges();
+            }
+        }
+
+        public static PlayList GetPalyListWithMaxId()
+        {
+            PlayList playList;
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                int max = ctx.PlayLists.Max(p => p.Id);
+                playList = ctx.PlayLists.FirstOrDefault(p => p.Id == max);
+            }
+
+            return playList;
+        }
+        public static void CreatePlayListSound(int soundId, int playListId)
+        {
+            PlayListSound playListSound = new PlayListSound()
+            {
+                SoundId = soundId,
+                PlayListId = playListId
+            };
+
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                ctx.PlayListSounds.Add(playListSound);
+                ctx.SaveChanges();
+            }
         }
     }
 }

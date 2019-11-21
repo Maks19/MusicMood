@@ -9,7 +9,7 @@ using System.Web;
 
 namespace LibraryServices
 {
-    public class Sound
+    public class Sound: IComparable
     {
         [Key]
         public int Id { get; set; }
@@ -24,5 +24,12 @@ namespace LibraryServices
         public virtual ICollection<PersonSound> PersonSounds { get; set; }
         public virtual ICollection<PlayListSound> PlayListSound { get; set; }
         public virtual ICollection<SoundTag> SoundTags { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            Sound sound = obj as Sound;
+
+            return this.Id.CompareTo(sound.Id);
+        }
     }
 }

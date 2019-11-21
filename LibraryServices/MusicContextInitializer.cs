@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LibraryServices
 {
     public class MusicContextInitializer : 
-        DropCreateDatabaseAlways<LibraryServices.MusicContext>
+        CreateDatabaseIfNotExists<LibraryServices.MusicContext>
     {
         protected override void Seed(MusicContext context)
         {
