@@ -3,5 +3,7 @@
     ViewBag.Title = "MainLayout";
 }
 
+@Styles.Render("~/Content/css")
 <h2>MainLayout</h2>
-@RenderBody();
+@RenderSection("scripts", required: false)
+@RenderBody()

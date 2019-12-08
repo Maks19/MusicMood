@@ -32,18 +32,17 @@ namespace MusicMood.Controllers
         public ActionResult Upload(UploadModel model)
         {
 
-            if (model.Title != null && Regex.IsMatch(model.Title, "^[\\wа-яА-Я]+$"))
+            if (model.Title != null && Regex.IsMatch(model.Title, "^[\\wа-яА-Я\\s_$#&*!]+$"))
             {
                 
-                if (DbService.GetSoundByName(model.Title)?.Title == model.Title ||
-                    DbService.GetSoundByMusicFileName(model.SoundObj.FileName)?.MusicName == model.SoundObj.FileName)
+                if (DbService.GetSoundByName(model.Title)?.Title == model.Title)
                 {
                     ModelState.AddModelError(nameof(model.Title), "Song with this name is exsists!");
                 }
             }
             else
             {
-                ModelState.AddModelError(nameof(model.Title), "Necessary field 'Title'");
+                ModelState.AddModelError(nameof(model.Title), "Necessary field 'Title' or not valid");
             }
 
             if (model.Color == null)
@@ -71,6 +70,9 @@ namespace MusicMood.Controllers
                     ModelState.AddModelError(nameof(model.SoundObj), "Cannot load audiofile with current format!");
 
                 }
+            }
+            else {
+                ModelState.AddModelError(nameof(model.SoundObj), "Load audio file!");
             }
 
 

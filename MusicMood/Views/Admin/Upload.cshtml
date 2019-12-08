@@ -14,7 +14,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-3">
-            <img id="img-sound" style="background-color:#787878" class="img-rounded" />
+            <img id="img-sound" src="~/Content/img/default-release.png" style="background-color:#787878" class="img-rounded" />
             @Html.TextBoxFor(model => model.SoundImg,null, new { type="file", id="img-upload", name="Img" , onchange="ImgPreview(this)"})
             @Html.ValidationMessageFor(model => model.SoundImg, "", new { @class = "text-danger" })
         </div>
@@ -22,7 +22,7 @@
 
             <div>
                 <label>Title</label>
-                @Html.TextBoxFor(model => model.Title, null, new { @class = "col-5 form-control" })
+                @Html.TextBoxFor(model => model.Title, null, new { @class = "col-5 form-control"})
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
 

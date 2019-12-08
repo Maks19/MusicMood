@@ -19,12 +19,11 @@ namespace MusicMood.Models
         [StringLength(12, MinimumLength = 3)]
         public string Gener { get; set; }
         [Required]
-        [StringLength(12, MinimumLength = 3)]
         public string Artist { get; set; }
         [Required]
         [StringLength(12, MinimumLength = 3)]
         public string Color { get; set; }
-  
+
         [StringLength(1000)]
         public string Description { get; set; }
         [Required]

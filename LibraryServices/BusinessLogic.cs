@@ -29,7 +29,7 @@ namespace LibraryServices
         }
 
         public static void Notify(Person user, string newPassword) {
-           var addresser = new MailAddress("alex.23.kovalov@gmail.com", "MusicMood");
+           var addresser = new MailAddress("musicmoodpzpi178@gmail.com", "MusicMood");
             var addressee = new  MailAddress(user.Email, user.FirstName);
             using (MailMessage mailMessage = new MailMessage(addresser, addressee))
             using (SmtpClient smtpClient = new SmtpClient()) 
@@ -41,14 +41,14 @@ namespace LibraryServices
                 smtpClient.EnableSsl = true;
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(addresser.Address,"rjdfktd_1991");
+                smtpClient.Credentials = new NetworkCredential(addresser.Address, "eshkereteam");
                 smtpClient.Send(mailMessage);
             }
             
         }
 
         public static void SaveInRootFolder(HttpPostedFileBase fileObj, string fileDirect) {
-            string path = HttpContext.Current.Server.MapPath($"~/App_Data/{fileDirect}");
+            string path = HttpContext.Current.Server.MapPath($"~/Content/{fileDirect}");
             string fileName = Path.GetFileName(fileObj.FileName);
             string fullPath = Path.Combine(path, fileName);
             fileObj.SaveAs(fullPath);

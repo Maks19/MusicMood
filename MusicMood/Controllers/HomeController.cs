@@ -15,15 +15,18 @@ namespace MusicMood.Controllers
     public class HomeController : Controller
     {
         
+        [HttpGet]
         public ActionResult Index()
         {
             if (User.IsInRole("admin"))
             {
                 return RedirectToAction("Upload","Admin");
             }
-
-            return View();
+            List<Sound> sounds = DbService.FetchAllMusic();
+            return View(sounds);
         }
+
+       
 
         public ActionResult Exit()
         {
@@ -139,5 +142,8 @@ namespace MusicMood.Controllers
         {
             return View();
         }
+
+        
+
     }
 }
