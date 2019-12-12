@@ -173,6 +173,7 @@
     <Compile Include="Providers\CustomRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\spinner.gif" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -212,7 +213,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\MainLayout.cshtml" />
     <Content Include="Views\Account\Authorize.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -224,12 +224,13 @@
     <Content Include="Views\Admin\PlayListCreating.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Admin\PartialSounds.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\AlbumImg\" />
-    <Folder Include="App_Data\MusicStorage\" />
-    <Folder Include="App_Data\SoundImg\" />
-    <Folder Include="App_Data\UserImg\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\MusicStorage\" />
+    <Folder Include="Content\SoundImg\" />
+    <Folder Include="Content\UserImg\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

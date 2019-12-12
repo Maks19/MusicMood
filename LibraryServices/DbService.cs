@@ -122,6 +122,8 @@ namespace LibraryServices
             return sound;
         }
 
+      
+
         public static Sound GetSoundById(int id)
         {
 
@@ -139,9 +141,18 @@ namespace LibraryServices
 
             using (var ctx = new MusicContext("MusicContext"))
             {
-                sounds = ctx.Sounds.Include(s => s.PersonSounds).Include(s => s.PlayListSound).ToList();
+                sounds = ctx.Sounds.Include(s => s.PersonSounds)
+                    .Include(s => s.PlayListSound).ToList();
             }
 
+            return sounds;
+        }
+        public static List<Sound> FindTrackByName(string trackTitle) {
+            List<Sound> sounds;
+            using (var ctx = new MusicContext("MusicContext")) {
+                sounds = ctx.Sounds.Include(p => p.PlayListSound)
+                    .Include(s => s.SoundTags).Where(t => t.MusicName == trackTitle).ToList();
+            }
             return sounds;
         }
         public static Person AutorizeConfirm(string login, string password)
