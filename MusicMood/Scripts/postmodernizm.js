@@ -1,4 +1,5 @@
 ﻿
+
 $(".dot").click(function () {
     let color = $(this).css("background-color");
     let rgb = color.slice(4, color.length - 1).split(",");
@@ -10,8 +11,7 @@ $(".dot").click(function () {
 });
 
 $(document).ready(function () {
-    function isContains(str, compstr,param) {
-
+    function isContains(str, compstr, param) {
         str = str[0].innerText.toLowerCase()
         compstr = compstr.toLowerCase();
         let find = str.indexOf(compstr);
@@ -35,3 +35,18 @@ $(document).ready(function () {
     })
 });
 
+$(".change-color-dot").click(function () {
+    let colorVal = $(this).css("background-color");
+    let blocks = $(".music-content");
+    $(".to-change-color-dot").css("background-color", colorVal);
+    $(".to-change-color-dot").text("");
+
+    blocks.each(function (elem) {
+        let colBlock = this.querySelector(".color-musick-block");
+        if (colBlock.style.backgroundColor != colorVal) {
+            this.style.display = "none";
+        } else {
+            this.style.display = "block";
+        }
+    })
+});
