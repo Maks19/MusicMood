@@ -30,19 +30,19 @@
         @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
         <div class="card">
             <div class="row">
-                <div class="dot" style="background-color:#000000"></div>
-                <div class="dot" style="background-color:#808080"></div>
-                <div class="dot" style="background-color:#fffff0"></div>
+                <div class="dot" style="background-color:#000000" value="false" onclick="pickColor(event)"></div>
+                <div class="dot" style="background-color:#808080" value="false" onclick="pickColor(event)"></div>
+                <div class="dot" style="background-color:#fffff0" value="false" onclick="pickColor(event)"></div>
             </div>
             <div class="row">
-                <div class="dot" style="background-color:#ff0000"></div>
-                <div class="dot" style="background-color:#00ff21"></div>
-                <div class="dot" style="background-color:#4800ff"></div>
+                <div class="dot" style="background-color:#ff0000" value="false" onclick="pickColor(event)"></div>
+                <div class="dot" style="background-color:#00ff21" value="false" onclick="pickColor(event)"></div>
+                <div class="dot" style="background-color:#4800ff" value="false" onclick="pickColor(event)"></div>
             </div>
             <div class="row">
-                <div class="dot" style="background-color:#ffd800"></div>
-                <div class="dot" style="background-color:#b200ff"></div>
-                <div class="dot" style="background-color:#ff6a00"></div>
+                <div class="dot" style="background-color:#ffd800" value="false" onclick="pickColor(event)"></div>
+                <div class="dot" style="background-color:#b200ff" value="false" onclick="pickColor(event)"></div>
+                <div class="dot" style="background-color:#ff6a00" value="false" onclick="pickColor(event)"></div>
             </div>
         </div>
     </div>
@@ -57,7 +57,13 @@
 </div>
 
 <script>
-    function aaa() {
-        alert("asdasdsad");
+    function pickColor(event) {
+        if (event.currentTarget.getAttribute('value') === "true") {
+            event.currentTarget.setAttribute("value", false);
+            event.currentTarget.style.border = "none";
+        } else {
+            event.currentTarget.setAttribute("value", true);
+            event.currentTarget.style.border = "2px solid blue";
+        }
     }
 </script>
