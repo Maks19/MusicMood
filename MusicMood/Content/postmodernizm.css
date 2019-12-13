@@ -10,3 +10,17 @@
     width: 200px;
     margin-top:50px;
 }
+
+.color-musick-block{
+    width: 100px;
+    height: 30px;
+    border: 2px solid black;
+}
+
+.my-drop-list ul {
+    display: none;
+}
+
+.my-drop-list:hover ul {
+    display: block;
+}
