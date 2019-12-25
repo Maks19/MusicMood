@@ -1,6 +1,12 @@
 ﻿@using LibraryServices;
 @{
     Layout = "~/Views/Shared/MainLayout.cshtml";
+
+    List<PersonSound> personSounds = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        personSounds = DbService.GetAllUserSounds(DbService.GetPersonByLogin(User.Identity.Name).Id);
+    }
 }
 
 <div class="container">
@@ -43,17 +49,48 @@
 
     @foreach (Sound item in Model)
     {
+
+        bool exsisted = false;
+        if (personSounds != null)
+        {
+            foreach (PersonSound personSound in personSounds)
+            {
+                if (personSound.Sound.Id == item.Id)
+                {
+                    exsisted = true;
+                }
+            }
+        }
+
         <div class="music-content content">
             <p id="title">@item.Title </p>
             <img src="~/Content/SoundImg/@item.ImgName" id="img-sound" />
             <p>@item.Artist</p>
             <p>@item.Album</p>
             <div style="background-color: @item.Color" class="color-musick-block"></div>
+            <div>
+                @if (!User.Identity.IsAuthenticated)
+                {
+
+                }
+                else if (exsisted)
+                {
+                    <span class="text-danger">Песня уже добавлена</span>
+                    }
+                else
+                {
+                    using (Ajax.BeginForm("PartialSoundAdd", new { id = item.Id }, new AjaxOptions { UpdateTargetId = "added-block" }))
+                    {
+                        <input type="submit" value="добавить в ifбранное">
+                    }
+                }
+            </div>
             <p>@item.Rate</p>
             <audio controls>
                 <source src="~/Content/MusicStorage/@item.MusicName">
             </audio>
         </div>
+        <hr />
     }
 
 </div>

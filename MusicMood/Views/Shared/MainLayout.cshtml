@@ -11,10 +11,24 @@
     ViewBag.Title = "MainLayout";
 }
 
-@Styles.Render("~/Content/css")
-<h2>MainLayout</h2>
 @RenderSection("scripts", required: false)
-@RenderBody()
+
+<div>
+    @Html.ActionLink("Главная", "Index", "Home")
+    @Html.ActionLink("Плей-листы", "PlayLists", "Home")
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Акаунт", "UserAccount", "Home")
+        @Html.ActionLink("Выход", "Exit", "Home")
+    }
+    else
+    {
+        @Html.ActionLink("Вход", "Authorize", "Account")
+    }
+</div>
+<main>
+    @RenderBody()
+</main>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")

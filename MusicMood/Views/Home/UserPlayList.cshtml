@@ -1,0 +1,30 @@
+﻿@model IEnumerable<LibraryServices.PlayListSound>
+@using LibraryServices
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<h2>@Model.FirstOrDefault().PlayList.Name</h2>
+
+<div>
+    @using (Ajax.BeginForm("DeletePlayList", new { id = Model.FirstOrDefault().PlayListId }, new AjaxOptions {Confirm = "Вы уверены что хотите удалить этот плей-лист?"}))
+    {
+        <input type="submit" value="удалить">
+    }
+</div>
+
+@foreach (PlayListSound item in Model)
+{
+    <div class="music-content content">
+        <p id="title">@item.Sound.Title </p>
+        <img src="~/Content/SoundImg/@item.Sound.ImgName" id="img-sound" />
+        <p>@item.Sound.Artist</p>
+        <p>@item.Sound.Album</p>
+        <div style="background-color: @item.Sound.Color" class="color-musick-block"></div>
+        <p>@item.Sound.Rate</p>
+        <audio controls>
+            <source src="~/Content/MusicStorage/@item.Sound.MusicName">
+        </audio>
+    </div>
+}

@@ -20,7 +20,7 @@ namespace MusicMood.Controllers
         {
             if (User.IsInRole("admin"))
             {
-                return RedirectToAction("Upload","Admin");
+                return RedirectToAction("Index","Admin");
             }
             List<Sound> sounds = DbService.FetchAllMusic();
             return View(sounds);
@@ -137,13 +137,79 @@ namespace MusicMood.Controllers
             }
         }
 
-        [Authorize(Roles = "admin")]
-        public ActionResult AdminPage()
+        [Authorize(Roles = "user")]
+        public ActionResult UserAccount()
         {
-            return View();
+            Person user = DbService.GetPersonByLogin(User.Identity.Name);
+            return View(user);
         }
 
-        
+        [Authorize(Roles = "user")]
+        public ActionResult PlayLists()
+        {
+            List<PlayList> playLists = DbService.GetAllPlayLists();
+            return View(playLists);
+        }
 
+        [Authorize(Roles = "user")]
+        public ActionResult PlayList(int id)
+        {
+            List<PlayListSound> playListSound = DbService.GetPlayListSounds(id);
+            return View(playListSound);
+        }
+
+        [Authorize(Roles = "user")]
+        [HttpPost]
+        public void PartialSoundAdd(int id)
+        {
+            DbService.CreateUserSound(DbService.GetPersonByLogin(User.Identity.Name).Id,Convert.ToInt32(id));
+        }
+
+        [Authorize(Roles = "user")]
+        [HttpPost]
+        public void PartialPlayListAdd(int id)
+        {
+            DbService.CreateUserPlayList(DbService.GetPersonByLogin(User.Identity.Name).Id, Convert.ToInt32(id));
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult UserSounds()
+        {
+            Person user = DbService.GetPersonByLogin(User.Identity.Name);
+            List<PersonSound> personSounds = DbService.GetAllUserSounds(user.Id);
+
+            return View(personSounds);
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult UserPlayLists()
+        {
+            Person user = DbService.GetPersonByLogin(User.Identity.Name);
+            List<PersonPlayList> personPlayLists = DbService.GetAllUserPlayLists(user.Id);
+
+            return View(personPlayLists);
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult UserPlayList(int id)
+        {
+            List<PlayListSound> userPlayListSounds = DbService.GetPlayListSounds(id);
+            return View(userPlayListSounds);
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult DeletePlayList(int id)
+        {
+            Person user = DbService.GetPersonByLogin(User.Identity.Name);
+            DbService.DeleteUserPlayList(user.Id,id);
+            return JavaScript($"window.location = 'https://localhost:44359/Home/UserPlayLists'");
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult DeleteSound(int id)
+        {
+            DbService.DeleteUserSound(id);
+            return JavaScript($"window.location = 'https://localhost:44359/Home/UserSounds'");
+        }
     }
 }

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<LibraryServices.PersonPlayList>
+@using LibraryServices
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<h2>UserPlayLists</h2>
+
+@foreach (PersonPlayList userPlayList in Model)
+{
+    <h2>@userPlayList.PlayList.Name</h2>
+    @Html.ActionLink("Перейти", "UserPlayList", new { id = userPlayList.PlayList.Id });
+    <hr />
+}
