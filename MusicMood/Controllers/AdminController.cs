@@ -200,5 +200,11 @@ namespace MusicMood.Controllers
 
             return View(sounds);
         }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult AdminPage()
+        {
+            return View();
+        }
     }
 }

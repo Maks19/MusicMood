@@ -225,6 +225,14 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Admin\PartialSounds.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\AccountLayout.cshtml" />
+    <Content Include="Views\Home\UserAccount.cshtml" />
+    <Content Include="Views\Home\PlayLists.cshtml" />
+    <Content Include="Views\Home\PlayList.cshtml" />
+    <Content Include="Views\Home\UserSounds.cshtml" />
+    <Content Include="Views\Home\UserPlayLists.cshtml" />
+    <Content Include="Views\Home\UserPlayList.cshtml" />
+    <Content Include="Views\Home\PartialAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

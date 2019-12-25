@@ -122,7 +122,7 @@ namespace LibraryServices
             return sound;
         }
 
-      
+
 
         public static Sound GetSoundById(int id)
         {
@@ -147,9 +147,11 @@ namespace LibraryServices
 
             return sounds;
         }
-        public static List<Sound> FindTrackByName(string trackTitle) {
+        public static List<Sound> FindTrackByName(string trackTitle)
+        {
             List<Sound> sounds;
-            using (var ctx = new MusicContext("MusicContext")) {
+            using (var ctx = new MusicContext("MusicContext"))
+            {
                 sounds = ctx.Sounds.Include(p => p.PlayListSound)
                     .Include(s => s.SoundTags).Where(t => t.MusicName == trackTitle).ToList();
             }
@@ -219,6 +221,125 @@ namespace LibraryServices
             using (var ctx = new MusicContext("MusicContext"))
             {
                 ctx.PlayListSounds.Add(playListSound);
+                ctx.SaveChanges();
+            }
+        }
+
+        public static List<PlayList> GetAllPlayLists()
+        {
+            List<PlayList> playLists = new List<PlayList>();
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                playLists = ctx.PlayLists.ToList();
+            }
+
+            return playLists;
+        }
+        public static List<PlayListSound> GetPlayListSounds(int id)
+        {
+            List<PlayListSound> playListSounds = new List<PlayListSound>();
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                playListSounds = ctx.PlayListSounds.Include(p => p.Sound).Include(p => p.PlayList).Where(p => p.PlayListId == id).ToList();
+            }
+
+            return playListSounds;
+        }
+
+        public static List<PersonSound> GetAllUserSounds(int userId)
+        {
+            List<PersonSound> personSounds = new List<PersonSound>();
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                personSounds = ctx.PersonSounds.Include(p => p.Sound).Include(p => p.Person).Where(p => p.Person.Id == userId).ToList();
+            }
+
+            return personSounds;
+        }
+
+        public static void CreateUserSound(int userId, int soundId)
+        {
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                PersonSound personSound = new PersonSound()
+                {
+                    Person = ctx.Persons.FirstOrDefault(p => p.Id == userId),
+                    Sound = ctx.Sounds.FirstOrDefault(s => s.Id == soundId)
+                };
+
+                List<PersonSound> userSounds = GetAllUserSounds(userId);
+                bool b = true;
+                foreach (PersonSound userSound in userSounds)
+                {
+                    if (userSound.Sound.Id == soundId)
+                    {
+                        b = false;
+                    }
+                }
+                if (b)
+                {
+                    ctx.PersonSounds.Add(personSound);
+                    ctx.SaveChanges();
+                }
+            }
+        }
+
+        public static List<PersonPlayList> GetAllUserPlayLists(int userId)
+        {
+            List<PersonPlayList> personPlayLists = new List<PersonPlayList>();
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                personPlayLists = ctx.PersonPlayLists.Include(p => p.Person).Include(p => p.PlayList).Where(p => p.Person.Id == userId).ToList();
+            }
+
+            return personPlayLists;
+        }
+
+        public static void CreateUserPlayList(int userId, int playListId)
+        {
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                PersonPlayList personPlayList = new PersonPlayList()
+                {
+                    Person = ctx.Persons.FirstOrDefault(p => p.Id == userId),
+                    PlayList = ctx.PlayLists.FirstOrDefault(s => s.Id == playListId)
+                };
+
+                List<PersonPlayList> userPlayLists = GetAllUserPlayLists(userId);
+                bool b = true;
+                foreach (PersonPlayList userPlayList in userPlayLists)
+                {
+                    if (userPlayList.PlayList.Id == playListId)
+                    {
+                        b = false;
+                    }
+                }
+                if (b)
+                {
+                    ctx.PersonPlayLists.Add(personPlayList);
+                    ctx.SaveChanges();
+                }
+            }
+        }
+
+        public static void DeleteUserPlayList(int userId, int playListId)
+        {
+
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                PersonPlayList personPlayList = ctx.PersonPlayLists.FirstOrDefault(p => p.Person.Id == userId && p.PlayList.Id == playListId);
+                ctx.Entry(personPlayList).State = EntityState.Deleted;
+                ctx.SaveChanges();
+            }
+        }
+
+        public static void DeleteUserSound(int personSoundId)
+        {
+
+            using (var ctx = new MusicContext("MusicContext"))
+            {
+                PersonSound personSound = ctx.PersonSounds.FirstOrDefault(p => p.Id == personSoundId);
+                ctx.Entry(personSound).State = EntityState.Deleted;
                 ctx.SaveChanges();
             }
         }
