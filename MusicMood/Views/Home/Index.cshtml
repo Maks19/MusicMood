@@ -1,5 +1,11 @@
 ﻿@using LibraryServices;
 @{
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     Layout = "~/Views/Shared/MainLayout.cshtml";
 
     List<PersonSound> personSounds = null;
@@ -9,43 +15,45 @@
     }
 }
 
-<div class="container">
+<div class="container d-flex flex-column align-items-center p-5" style="background-color:#F8F9FA;">
     <div class="form-group">
         <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon-search"></i></span>
-            <input type="text" id="search-box">
+            <span style="width:auto" class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input style="min-width: 230px; font-size: 16px;" type="text" id="search-box">
         </div>
     </div>
-</div>
-<div class="my-drop-list list-inline-item">
-    <div class=" to-change-color-dot dot" style="background-color:#ffffff">?</div>
-    <span>▽ Выберите цвет</span>
-    <ul class="list-unstyled">
-        <li>
-            <div>
-                <ul>
-                    <li class="list-inline-item row mt-2">
-                        <div class="dot change-color-dot" style="background-color:#000000"></div>
-                        <div class="dot change-color-dot" style="background-color:#808080"></div>
-                        <div class="dot change-color-dot" style="background-color:#fffff0"></div>
-                    </li>
-                    <li class="list-inline-item row mt-2">
-                        <div class="dot change-color-dot" style="background-color:#ff0000"></div>
-                        <div class="dot change-color-dot" style="background-color:#00ff21"></div>
-                        <div class="dot change-color-dot" style="background-color:#4800ff"></div>
-                    </li>
-                    <li class="list-inline-item row mt-2">
-                        <div class="dot change-color-dot" style="background-color:#ffd800"></div>
-                        <div class="dot change-color-dot" style="background-color:#b200ff"></div>
-                        <div class="dot change-color-dot" style="background-color:#ff6a00"></div>
-                    </li>
-                </ul>
-            </div>
-        </li>
+    <div class="my-drop-list list-inline-item display-4">
+        <div class=" to-change-color-dot dot" style="background-color:#ffffff; text-align: center;
+    font-size: 24px; font-weight:bold;">?</div>
+        <span style="font-weight:bold;">▽ Choose color</span>
+        <ul class="list-unstyled">
+            <li>
+                <div>
+                    <ul>
+                        <li class="list-inline-item row mt-2">
+                            <div class="dot change-color-dot" style="background-color:#000000"></div>
+                            <div class="dot change-color-dot" style="background-color:#808080"></div>
+                            <div class="dot change-color-dot" style="background-color:#fffff0"></div>
+                        </li>
+                        <li class="list-inline-item row mt-2">
+                            <div class="dot change-color-dot" style="background-color:#ff0000"></div>
+                            <div class="dot change-color-dot" style="background-color:#00ff21"></div>
+                            <div class="dot change-color-dot" style="background-color:#4800ff"></div>
+                        </li>
+                        <li class="list-inline-item row mt-2">
+                            <div class="dot change-color-dot" style="background-color:#ffd800"></div>
+                            <div class="dot change-color-dot" style="background-color:#b200ff"></div>
+                            <div class="dot change-color-dot" style="        background-color: #ff6a00
+"></div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
 
-    </ul>
+        </ul>
+    </div>
 </div>
-<div class="container">
+<div class="container flex-column align-items-center display-4"  style="background-color:#F8F9FA; display:flex;">
 
     @foreach (Sound item in Model)
     {
@@ -62,26 +70,26 @@
             }
         }
 
-        <div class="music-content content">
+        <div class="music-content content flex-column align-items-center" style="display:flex;">
             <p id="title">@item.Title </p>
             <img src="~/Content/SoundImg/@item.ImgName" id="img-sound" />
             <p>@item.Artist</p>
             <p>@item.Album</p>
             <div style="background-color: @item.Color" class="color-musick-block"></div>
-            <div>
+            <div style="padding-top:10px;">
                 @if (!User.Identity.IsAuthenticated)
                 {
 
                 }
                 else if (exsisted)
                 {
-                    <span class="text-danger">Песня уже добавлена</span>
-                    }
+                    <span class="text-danger">Song is already added</span>
+                }
                 else
                 {
                     using (Ajax.BeginForm("PartialSoundAdd", new { id = item.Id }, new AjaxOptions { UpdateTargetId = "added-block" }))
                     {
-                        <input type="submit" value="добавить в ifбранное">
+                        <input type="submit" value="Add to favourite" class="btn btn-success btn-lg">
                     }
                 }
             </div>
