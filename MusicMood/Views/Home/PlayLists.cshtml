@@ -1,14 +1,20 @@
 ﻿@model IEnumerable<LibraryServices.PlayList>
 @using LibraryServices
 @{
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 
-<h2>PlayLists</h2>
-
-@foreach (PlayList playList in Model)
-{
-    <h2>@playList.Name</h2>
-    @Html.ActionLink("Перейти", "PlayList", new {id = playList.Id});
-    <hr />
-}
+<h2 style="text-align: center;
+    font-size: 50px;">PlayLists</h2>
+<div class="container d-flex flex-column align-items-center p-5 display-4" style="background-color:#F8F9FA;">
+    @foreach (PlayList playList in Model)
+    {
+        <h2>@playList.Name</h2>
+        @Html.ActionLink("Перейти", "PlayList", new { id = playList.Id });
+        <hr />
+    }
+</div>

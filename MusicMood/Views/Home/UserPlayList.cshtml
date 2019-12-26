@@ -2,29 +2,39 @@
 @using LibraryServices
 
 @{
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 
-<h2>@Model.FirstOrDefault().PlayList.Name</h2>
-
-<div>
-    @using (Ajax.BeginForm("DeletePlayList", new { id = Model.FirstOrDefault().PlayListId }, new AjaxOptions {Confirm = "Вы уверены что хотите удалить этот плей-лист?"}))
-    {
-        <input type="submit" value="удалить">
-    }
-</div>
-
-@foreach (PlayListSound item in Model)
-{
-    <div class="music-content content">
-        <p id="title">@item.Sound.Title </p>
-        <img src="~/Content/SoundImg/@item.Sound.ImgName" id="img-sound" />
-        <p>@item.Sound.Artist</p>
-        <p>@item.Sound.Album</p>
-        <div style="background-color: @item.Sound.Color" class="color-musick-block"></div>
-        <p>@item.Sound.Rate</p>
-        <audio controls>
-            <source src="~/Content/MusicStorage/@item.Sound.MusicName">
-        </audio>
+<h2 style="text-align: center;
+    font-size: 50px;">@Model.FirstOrDefault().PlayList.Name</h2>
+<div class="container d-flex flex-column align-items-center p-5 display-4" style="background-color:#F8F9FA;">
+    <div>
+        @using (Ajax.BeginForm("DeletePlayList", new { id = Model.FirstOrDefault().PlayListId }, new AjaxOptions { Confirm = "Вы уверены что хотите удалить этот плей-лист?" }))
+        {
+            <input type="submit" value="Delete" class="btn btn-danger btn-lg" style="min-width: 100px;
+    min-height: 50px;
+    font-size: 24px;">
+        }
     </div>
-}
+
+    @foreach (PlayListSound item in Model)
+    {
+        <div class="music-content content flex-column align-items-center" style="display:flex; margin-bottom:40px">
+            <p id="title">@item.Sound.Title </p>
+            <img src="~/Content/SoundImg/@item.Sound.ImgName" id="img-sound" />
+            <p>@item.Sound.Artist</p>
+            <p>@item.Sound.Album</p>
+            <div style="background-color: @item.Sound.Color" class="color-musick-block"></div>
+            <p>@item.Sound.Rate</p>
+            <audio controls>
+                <source src="~/Content/MusicStorage/@item.Sound.MusicName">
+            </audio>
+        </div>
+    }
+    </div>
