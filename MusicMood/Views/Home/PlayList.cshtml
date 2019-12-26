@@ -2,6 +2,12 @@
 @using LibraryServices
 
 @{
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     Layout = "~/Views/Shared/MainLayout.cshtml";
 
     List<PersonPlayList> personPlayLists = null;
@@ -23,33 +29,36 @@
     }
 }
 
-<h2>PlayList</h2>
-@if (exsisted)
-{
-    <span class="text-danger">Плей-лист уже добавлена</span>
-}
-else
-{
-    <div>
-        @using (Ajax.BeginForm("PartialPlayListAdd", new { id = Model.FirstOrDefault().PlayListId }, new AjaxOptions { UpdateTargetId = "added-block" }))
-        {
-            <input type="submit" value="добавить в мои плей листы">
-        }
-        <div id="added-block"></div>
-    </div>
-}
+<h2 style="text-align: center;
+    font-size: 50px;">PlayList</h2>
+<div class="container d-flex flex-column align-items-center p-5 display-4" style="background-color:#F8F9FA;">
+    @if (exsisted)
+    {
+        <span class="text-danger">PlayList is already added</span>
+    }
+    else
+    {
+        <div>
+            @using (Ajax.BeginForm("PartialPlayListAdd", new { id = Model.FirstOrDefault().PlayListId }, new AjaxOptions { UpdateTargetId = "added-block" }))
+            {
+                <input type="submit" value="Add to my playlists" class="btn btn-success btn-lg">
+            }
+            <div id="added-block"></div>
+        </div>
+    }
 
-@foreach (PlayListSound item in Model)
-{
-    <div class="music-content content">
-        <p id="title">@item.Sound.Title </p>
-        <img src="~/Content/SoundImg/@item.Sound.ImgName" id="img-sound" />
-        <p>@item.Sound.Artist</p>
-        <p>@item.Sound.Album</p>
-        <div style="background-color: @item.Sound.Color" class="color-musick-block"></div>
-        <p>@item.Sound.Rate</p>
-        <audio controls>
-            <source src="~/Content/MusicStorage/@item.Sound.MusicName">
-        </audio>
-    </div>
-}
+    @foreach (PlayListSound item in Model)
+    {
+        <div class="music-content content flex-column align-items-center" style="display:flex; margin-bottom:40px">
+            <p id="title">@item.Sound.Title </p>
+            <img src="~/Content/SoundImg/@item.Sound.ImgName" id="img-sound" style="margin:0px"/>
+            <p>@item.Sound.Artist</p>
+            <p>@item.Sound.Album</p>
+            <div style="background-color: @item.Sound.Color" class="color-musick-block"></div>
+            <p>@item.Sound.Rate</p>
+            <audio controls>
+                <source src="~/Content/MusicStorage/@item.Sound.MusicName">
+            </audio>
+        </div>
+    }
+</div>

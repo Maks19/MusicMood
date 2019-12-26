@@ -5,10 +5,13 @@
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 
-<h2>UserAccount</h2>
+<h2 style="text-align: center;
+    font-size: 50px;">UserAccount</h2>
+<div class="container d-flex flex-column align-items-center p-5 display-4" style="background-color:#F8F9FA;">
 <ul>
     <li><h2>@Html.ActionLink("Избранные песни", "UserSounds")</h2></li>
     <li><h2>@Html.ActionLink("Мои плей-листы", "UserPlayLists")</h2></li>
     <li><h2>@Html.ActionLink("Редактирование Акаунта", "Setting")</h2></li>
     <li><h2>@Html.ActionLink("Выход", "Exit")</h2></li>
 </ul>
+</div>
